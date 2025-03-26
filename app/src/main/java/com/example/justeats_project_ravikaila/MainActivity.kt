@@ -17,9 +17,18 @@ class MainActivity : AppCompatActivity() {
 
         requestManger.getRestaurants(object: ListenerAPI {
             override fun onFetch(response: APIResponse, message: String) {
+
                 Toast.makeText(this@MainActivity,"Fetched ${response.restaurants.size}",Toast.LENGTH_SHORT).show()
                 val restaurants = response.restaurants
-                textView.text = restaurants.joinToString("\n"){it.name}
+                textView.text = restaurants.joinToString("\n\n"){restaurant ->
+                    val name = restaurant.name
+                    val cuisines = restaurant.cuisines.joinToString { it.name }
+                    val locationAddress = restaurant.address.firstLine
+                    val locationPostcode = restaurant.address.postalCode
+                    val rating = restaurant.rating.starRating
+                    "The rating for $name is $rating, which is located at $locationAddress, $locationPostcode and is $cuisines."
+
+                }
             }
 
             override fun onError(message: String) {
