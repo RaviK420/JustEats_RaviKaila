@@ -14,7 +14,8 @@ class RequesterAPI(private val context: Context) {
     fun getRestaurants(listener: ListenerAPI){
         val apiService = retrofit.create(InterfaceAPI::class.java)
         val call = apiService.getPost(
-            "TW200DE"
+            "TW200DE",
+            10
         )
         call.enqueue(object : Callback<APIResponse>{
             override fun onResponse(
