@@ -27,7 +27,7 @@ class RestaurantAdapter(private val restaurant: List<Restaurant>): RecyclerView.
         holder.restaurantName.text = restaurant.name
         holder.location.text = "${restaurant.address.firstLine}, ${restaurant.address.postalCode}"
         holder.cuisines.text = restaurant.cuisines.joinToString(", ") { it.name }
-        holder.restaurantRating.text = "${restaurant.rating.starRating.toString()} *"
+        holder.restaurantRating.text = restaurant.rating.starRating.toString()
 //        holder.textView.text = "${restaurant.name} is located at ${restaurant.address.firstLine}, ${restaurant.address.postalCode} has a score of ${restaurant.rating.starRating}, and its cuisines are ${restaurant.cuisines}"
 
     }

@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.TextView
 import android.Manifest
 import android.util.Log
+import androidx.appcompat.widget.SearchView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,23 +24,48 @@ class MainActivity : AppCompatActivity() {
         var requestManger = RequesterAPI(this)
         var recyclerView = findViewById<RecyclerView>(R.id.restaurantRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
+        val searchView = findViewById<SearchView>(R.id.search)
+        fun fetchRestaurants(postcode: String = "TW200DE"){
+            requestManger.getRestaurants(object: ListenerAPI {
+                override fun onFetch(response: APIResponse, message: String) {
 
+                    Toast.makeText(this@MainActivity,"Fetched ${response.restaurants.size}",Toast.LENGTH_SHORT).show()
+                    val adapter = RestaurantAdapter(response.restaurants)
+                    recyclerView.adapter = adapter
+                    println(response.restaurants)
 
-        requestManger.getRestaurants(object: ListenerAPI {
-            override fun onFetch(response: APIResponse, message: String) {
+                }
 
-                Toast.makeText(this@MainActivity,"Fetched ${response.restaurants.size}",Toast.LENGTH_SHORT).show()
-                val adapter = RestaurantAdapter(response.restaurants)
-                recyclerView.adapter = adapter
-                println(response.restaurants)
+                override fun onError(message: String) {
+                    Toast.makeText(this@MainActivity,"Error: $message", Toast.LENGTH_SHORT).show()
 
+                }
+            },postcode = postcode)
+
+        }
+        fetchRestaurants()
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let {
+                    fetchRestaurants(it.lowercase())
+                    searchView.setQuery("",false)
+                    searchView.clearFocus()
+                }
+                return true
             }
 
-            override fun onError(message: String) {
-                Toast.makeText(this@MainActivity,"Error: $message", Toast.LENGTH_SHORT).show()
-
+            override fun onQueryTextChange(newText: String?): Boolean {
+                // Optional: Live search here
+                return true
             }
         })
+
+
+
+
+
+
+
 
     }
 }

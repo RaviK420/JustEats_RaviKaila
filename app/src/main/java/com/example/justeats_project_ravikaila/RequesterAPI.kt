@@ -11,10 +11,10 @@ class RequesterAPI(private val context: Context) {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    fun getRestaurants(listener: ListenerAPI){
+    fun getRestaurants(listener: ListenerAPI,postcode: String){
         val apiService = retrofit.create(InterfaceAPI::class.java)
         val call = apiService.getPost(
-            "TW200DE",
+            postcode,
             10
         )
         call.enqueue(object : Callback<APIResponse>{
