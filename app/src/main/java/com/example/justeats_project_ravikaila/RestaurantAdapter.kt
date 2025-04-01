@@ -8,13 +8,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import org.w3c.dom.Text
 
-class RestaurantAdapter(private val restaurant: List<Restaurant>): RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder>() {
+class RestaurantAdapter(private val restaurant: List<Restaurant>,private val listener: RestaurantClickListener): RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder>() {
 
     inner class RestaurantViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val restaurantName: TextView = itemView.findViewById(R.id.restaurantName)
         val location: TextView = itemView.findViewById(R.id.restaurantLocation)
         val cuisines: TextView = itemView.findViewById(R.id.restaurantCuisines)
         val restaurantRating :TextView = itemView.findViewById(R.id.restaurantRating)
+
+
     }
     override fun onCreateViewHolder(parent:ViewGroup,viewType: Int): RestaurantViewHolder{
         val view = LayoutInflater.from(parent.context)
@@ -22,16 +24,21 @@ class RestaurantAdapter(private val restaurant: List<Restaurant>): RecyclerView.
         return RestaurantViewHolder(view)
     }
 
+    // assigns the data to its corresponding text
     override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
         val restaurant = restaurant[position]
         holder.restaurantName.text = restaurant.name
         holder.location.text = "${restaurant.address.firstLine}, ${restaurant.address.postalCode}"
         holder.cuisines.text = restaurant.cuisines.joinToString(", ") { it.name }
         holder.restaurantRating.text = restaurant.rating.starRating.toString()
-//        holder.textView.text = "${restaurant.name} is located at ${restaurant.address.firstLine}, ${restaurant.address.postalCode} has a score of ${restaurant.rating.starRating}, and its cuisines are ${restaurant.cuisines}"
+
+        holder.itemView.setOnClickListener{
+            listener.onRestaurantClick(restaurant.address.postalCode)
+        }
 
     }
 
+    // The size of the recyclerView is dependent on the size of restaurantList
     override fun getItemCount(): Int = restaurant.size
 
 }

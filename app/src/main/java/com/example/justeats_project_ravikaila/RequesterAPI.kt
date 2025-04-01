@@ -13,15 +13,9 @@ class RequesterAPI(private val context: Context) {
 
     fun getRestaurants(listener: ListenerAPI,postcode: String){
         val apiService = retrofit.create(InterfaceAPI::class.java)
-        val call = apiService.getPost(
-            postcode,
-            10
-        )
+        val call = apiService.getPost(postcode, 10)
         call.enqueue(object : Callback<APIResponse>{
-            override fun onResponse(
-                call: Call<APIResponse>,
-                response: Response<APIResponse>
-            ){
+            override fun onResponse(call: Call<APIResponse>, response: Response<APIResponse>){
                 if(!response.isSuccessful){
                     listener.onError("Error: ${response.message()}")
                     return
