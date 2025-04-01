@@ -9,6 +9,8 @@ import android.Manifest
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.DialogInterface
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import androidx.appcompat.widget.SearchView
 import android.widget.Toast
@@ -24,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        var requestManger = RequesterAPI(this)
+        var requestManager = RequesterAPI(this)
         var recyclerView = findViewById<RecyclerView>(R.id.restaurantRecyclerView)
         var progressDialog : ProgressDialog
         var incorrectPostcode : AlertDialog
@@ -40,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         //Fetch restaurants based on the postcode string inputted and if nothing is inputted then a default postcode is given
         //Restaurants are then placed within the recyclerView
         fun fetchRestaurants(postcode: String = "TW200DE"){
-            requestManger.getRestaurants(object: ListenerAPI {
+            requestManager.getRestaurants(object: ListenerAPI {
                 override fun onFetch(response: APIResponse, message: String) {
                     progressDialog.dismiss()
 
@@ -48,7 +50,10 @@ class MainActivity : AppCompatActivity() {
                     val adapter = RestaurantAdapter(response.restaurants, object: RestaurantClickListener{
                         override fun onRestaurantClick(postcode: String) {
                             // Displays postcode on the restaurant clicked
-                            Toast.makeText(this@MainActivity,postcode,Toast.LENGTH_SHORT).show()
+                            val restaurantPostcode = Uri.parse("geo:0,0?q=$postcode")
+                            val googleMaps = Intent(Intent.ACTION_VIEW,restaurantPostcode)
+                            googleMaps.setPackage("com.google.android.apps.maps")
+                            startActivity(googleMaps)
                         }
                     })
                     recyclerView.adapter = adapter
