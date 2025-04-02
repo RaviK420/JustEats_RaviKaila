@@ -86,6 +86,7 @@ class MainActivity : AppCompatActivity() {
                     fetchRestaurants(postcode)
 
                 }
+                // If inputted an incorrect postcode, inform the user
                 else{
                     incorrectPostcode = AlertDialog.Builder(this@MainActivity)
                         .setTitle("Incorrect Postcode")

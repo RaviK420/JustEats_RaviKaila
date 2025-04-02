@@ -10,7 +10,7 @@ class RequesterAPI(private val context: Context) {
         .baseUrl("https://uk.api.just-eat.io/discovery/uk/restaurants/enriched/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
-//Gets 10 restaurants based on the postcode inputted and outputs errors depending on the scenario, if an error has occurred
+//Gets 10 restaurants based on the postcode inputted and outputs errors depending on the scenario
     fun getRestaurants(listener: ListenerAPI,postcode: String){
         val apiService = retrofit.create(InterfaceAPI::class.java)
         val call = apiService.getPost(postcode, 10)

@@ -5,7 +5,7 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-
+//get post should take in 2 variables which is postcode and limit
 interface InterfaceAPI {
     @GET("bypostcode/{postcode}")
     fun getPost(
