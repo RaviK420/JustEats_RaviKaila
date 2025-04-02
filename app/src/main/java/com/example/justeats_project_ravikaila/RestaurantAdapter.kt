@@ -33,7 +33,8 @@ class RestaurantAdapter(private val restaurant: List<Restaurant>,private val lis
         holder.restaurantRating.text = restaurant.rating.starRating.toString()
 
         holder.itemView.setOnClickListener{
-            listener.onRestaurantClick(restaurant.address.postalCode)
+            val location = restaurant.address.firstLine
+            listener.onRestaurantClick(location+", "+restaurant.address.postalCode)
         }
 
     }

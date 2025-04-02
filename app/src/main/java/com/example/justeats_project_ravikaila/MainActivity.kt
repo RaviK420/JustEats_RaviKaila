@@ -48,10 +48,10 @@ class MainActivity : AppCompatActivity() {
 
                     Toast.makeText(this@MainActivity,"Fetched ${response.restaurants.size}",Toast.LENGTH_SHORT).show()
                     val adapter = RestaurantAdapter(response.restaurants, object: RestaurantClickListener{
-                        override fun onRestaurantClick(postcode: String) {
-                            // Displays postcode on the restaurant clicked
-                            val restaurantPostcode = Uri.parse("geo:0,0?q=$postcode")
-                            val googleMaps = Intent(Intent.ACTION_VIEW,restaurantPostcode)
+                        override fun onRestaurantClick(location: String) {
+                            // Displays the location of the restaurant clicked
+                            val restaurantLocation = Uri.parse("geo:0,0?q=$location")
+                            val googleMaps = Intent(Intent.ACTION_VIEW,restaurantLocation)
                             googleMaps.setPackage("com.google.android.apps.maps")
                             startActivity(googleMaps)
                         }
