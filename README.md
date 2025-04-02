@@ -7,7 +7,7 @@ Before using and testing this application, there are some prerequisites in order
   
 Alternatively, download "Android Studio Electric Eel | 2022.1.1 Patch 2".
 # How to run the application 
-In order to run the application, please install the apk file called "APK_fileName" on your Android device. Once installed, open the "App name" application.
+In order to run the application, please install the apk file called "JustEat_Project_RaviKaila.apk" on your Android device. Once installed, open the "JustEat_Project_RaviKaila" application.
 
 Alternatively, you can access the application by downloading the zip file of the repository, extracting the zip and opening the extracted folder within Android Studio. Please note that this application has been made on "Android Studio Electric Eel | 2022.1.1 Patch 2", and may not work on other versions. Once installed, please run the application using an emulator created in Android Studio. 
 
